@@ -20,6 +20,7 @@ fmt.Println("formating" )
 */
 
 //exo3
+/*
 package main
 
 import (
@@ -38,3 +39,6 @@ func main() {
         fmt.Println("pas de version")
     }
 }
+*/
+//exo4
+//voir fichier .go dans img_diff
