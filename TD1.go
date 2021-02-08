@@ -30,7 +30,7 @@ import (
 const VERSION = "1.0"
 
 func main() {
-    var version = flag.Bool("version", false, "Version prog")
+    var version = flag.Bool("version", false, "")
     flag.Parse()
     if *version {
         fmt.Println(VERSION)
