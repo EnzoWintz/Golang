@@ -1,3 +1,3 @@
-module img_diff
+module img
 
 go 1.15
