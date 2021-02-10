@@ -80,27 +80,57 @@ func main() {
 
 }
 */
+/*
+package main
 
+import "fmt"
+//import "builtin"
+import "time"
+
+    
+type MyError struct {
+    When time.Time
+    What string
+}
+
+func (err MyError) Error() string {
+        return fmt.Sprintf("Error at: %v this happened: %s", err.When, err.What)
+}
+
+func run() error {
+    return MyError{
+        When: time.Now(),
+        What: "test",
+}
+}
+
+func main() {
+    err := run()
+    if err != nil{
+        fmt.Println(err)
+        return
+    }
+    fmt.Println("no error")
+
+
+}
+*/
 package main
 
 import (
     "fmt"
-	"time"
 
 )
-
-func run() error{
-    return MyError{
-       When: time.now(),
-       What: "erreur",
+type User struct {
+    Login string
+    Password string
+    age int
     }
- } 
- 
- type MyError struct {
-    When time.Time
-    What string
- }
- 
- func (err MyError) Error() string{
-    return fmt.Sprintf("ERROR: At: %v this happened: %s", err.When, err.What)
- }
+
+func main(){
+
+Paul := User{"Paul", "pass123",14}
+
+fmt.Println(Paul)
+
+}
