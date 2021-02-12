@@ -87,13 +87,14 @@ func main() {
 
 }
 */
+/*
 package main
 
 import "fmt"
 
 func main() {
 	ex := Example{age: 10}
-	modifAge(&ex, 45)
+	modifAge(ex, 45)
 	fmt.Println(ex)
 
 }
@@ -104,4 +105,75 @@ type Example struct {
 
 func modifAge(ex Example, age int) {
 	ex.age = age
+}
+*/
+//TD2
+package main
+
+import (
+	"encoding/json"
+	"io/ioutil"
+	"log"
+	"net/http"
+)
+
+var users = make(map[string]User)
+
+func main() {
+	data, err := ioutil.ReadFile("users.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+	var fileUsers []User
+	err = json.Unmarshal(data, &fileUsers)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, u := range fileUsers {
+		users[u.ID] = u
+	}
+
+	http.HandleFunc("/", handler)
+	http.ListenAndServe(":8000", nil)
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	valeurID := r.FormValue("id")
+
+	if valeurID == "" {
+
+		return
+	}
+
+	w.Header().Set(
+		"Content-Type",
+		"application/json; charset=utf-8",
+	)
+
+	user, found := users[valeurID]
+	if !found {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	data, err := json.Marshal(user)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+
+	_, err = w.Write(data)
+	if err != nil {
+
+		return
+	}
+}
+
+type User struct {
+	Login    string `json:"UserName"`
+	Password string
+	ID       string `json:"UserId"`
 }

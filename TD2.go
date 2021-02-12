@@ -194,8 +194,7 @@ func getUserById(res http.ResponseWriter, req *http.Request) {
 
 			// Set my response to a Json format
 			res.Header().Set(
-				"Content-Type",charset
-				"application/json;=utf-8",
+				"Content-Type", charset, "application/json;=utf-8",
 			)
 			// return response 200 -> OK
 			res.WriteHeader(http.StatusOK)
