@@ -94,7 +94,7 @@ func done(w http.ResponseWriter, r *http.Request) {
 	//On initialise notre switch
 	switch r.Method {
 	case "GET":
-		//On met une condition qui affiche les tâches qui ne sont pas terminés
+		//On met une condition qui affiche les tâches qui terminées
 		for u := range tasks {
 			if tasks == true {
 				return
