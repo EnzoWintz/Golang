@@ -102,18 +102,18 @@ func done(w http.ResponseWriter, r *http.Request) {
 		}
 	case "POST":
 		//On lit le body
-		body, err := ioutil.ReadAll(rw.Body)
+		body, err := ioutil.ReadAll(w.Body)
 		if err != nil {
 			fmt.Printf("Error reading body: %v", err)
 			http.Error(
-				rw,
+				w,
 				"can't read body", http.StatusBadRequest,
 			)
 			return
 		}
 	default:
 		//On définit notre message par défaut
-		rw.WriteHeader(http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
 	}
 }
 
