@@ -33,7 +33,7 @@ func list(rw http.ResponseWriter, _ *http.Request) {
 	}
 
 	//On met une condition qui affiche les tâches qui ne sont pas terminés
-	if tasks != nil {
+	if tasks == false {
 		return
 	}
 
@@ -67,7 +67,7 @@ func add(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	//On effectue la lecture du corps de la requête
-	body, err := ioutil.ReadAll(r.Body)
+	body, err := ioutil.ReadAll(rw.Body)
 	if err != nil {
 		fmt.Printf("Error reading body: %v", err)
 		http.Error(
@@ -94,7 +94,26 @@ func done(w http.ResponseWriter, r *http.Request) {
 	//On initialise notre switch
 	switch r.Method {
 	case "GET":
-		http.ServeFile(w, r)
+		//On met une condition qui affiche les tâches qui ne sont pas terminés
+		for u := range tasks {
+			if tasks == true {
+				return
+			}
+		}
+	case "POST":
+		//On lit le body
+		body, err := ioutil.ReadAll(rw.Body)
+		if err != nil {
+			fmt.Printf("Error reading body: %v", err)
+			http.Error(
+				rw,
+				"can't read body", http.StatusBadRequest,
+			)
+			return
+		}
+	default:
+		//On définit notre message par défaut
+		rw.WriteHeader(http.StatusBadRequest)
 	}
 }
 
